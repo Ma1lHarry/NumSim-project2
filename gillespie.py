@@ -14,8 +14,10 @@ def SSA(prop,stoch,X0,tspan,coeff):
     t=tvec[0]
     X=X0
     sMat=stoch()
+    counter = 0
 
     while t<tspan[1]:
+        counter += 1
         re=prop(X,coeff)
         a0=sum(re)
         if a0>1e-10:
