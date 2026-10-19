@@ -152,5 +152,57 @@ def SEIRDV():
     plt.legend()
     plt.show()
 
+
+
+
+
+
+
+def custom_prop(y, coeff):
+    w = numpy.zeros(5)
+    N = numpy.sum(y)
+
+    w[0] = coeff[1] * y[2] / N * y[0]
+    w[1] = coeff[0] * y[1]
+    w[2] = coeff[2] * y[2]
+    w[3] = coeff[3] * y[2]
+    if(y[0] > 0):
+        w[4] = coeff[4]
+    else:
+        w[4] = 0
+
+    return w
+
+
+def custom_stoch():
+    return numpy.array([[-1, 1, 0, 0, 0, 0],
+                        [0, -1, 1, 0, 0, 0],
+                        [0, 0, -1, 1, 0, 0],
+                        [0, 0, -1, 0, 1, 0],
+                        [-1, 0, 0, 0, 0, 1]])
+
+def custom():
+    x0 = (995, 0, 5, 0, 0, 0)
+    tspan = (0, 120)
+
+    beta = 0.3
+    gamma = 1/7
+    alfa = 1/2
+    my = 0.05
+    v = 5
+    coeff = [alfa, beta, gamma, my, v]
+
+    tvec, xarr = SSA(custom, custom, x0, tspan, coeff)
+    plt.plot(tvec,xarr[:,0],'b-',label="Suseptable")
+    plt.plot(tvec,xarr[:,1],'y-', label="Exposed")
+    plt.plot(tvec,xarr[:,2],'r-', label="Infected")
+    plt.plot(tvec,xarr[:,3],'g-', label="Recovered")
+    plt.plot(tvec,xarr[:,4],'k-', label="Dead")
+    plt.plot(tvec,xarr[:,5],'m-', label="Vaccinated")
+    
+    plt.legend()
+    plt.show()
+
+
 SEIRDV()
 
